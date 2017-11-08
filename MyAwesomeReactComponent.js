@@ -1,10 +1,12 @@
 import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
+import { connect } from "react-redux";
+
  
 // const MyAwesomeReactComponent = () => (
 // );
 
-export default class MyAwesomeReactComponent extends React.Component
+class MyAwesomeReactComponent extends React.Component
 {
 	constructor()
 	{
@@ -13,6 +15,14 @@ export default class MyAwesomeReactComponent extends React.Component
 			status:'start'
 		});
 	}
+
+	componentWillReceiveProps(nextProps)
+    {
+    	this.setState ({
+                status: nextProps.status.status
+            })
+    	// console.log("nextProps",nextProps.status.status);
+    }
 
 	changeColor()
 	{
@@ -25,10 +35,12 @@ export default class MyAwesomeReactComponent extends React.Component
 		{
 			new_message = 'start';
 		}
+		
+		this.props.changeStatus({'status':new_message});
 
-		this.setState({
-				status:new_message
-			})
+		// this.setState({
+		// 		status:new_message
+		// 	})
 	}
 
 	render()
@@ -39,6 +51,29 @@ export default class MyAwesomeReactComponent extends React.Component
 		)
 	}
 }
+
+const mapStateToProps = (state) => {
+	console.log("state",state);
+	console.log("mapStateToProps",state);
+    return{
+       status: state.StartStopReducer.status
+    }
+}
+
+
+const mapDispatchToProps = (dispatch) => {
+    return{
+        changeStatus: (data) => {
+        	console.log("in mapDispatchToProps");
+            dispatch({
+	            type: 'SET_STATUS',
+	            payload: data,
+          });
+        }
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(MyAwesomeReactComponent)
 
  
 // export default MyAwesomeReactComponent;
