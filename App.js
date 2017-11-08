@@ -1,11 +1,12 @@
 import React from 'react';
-
-export default class App extends React.Component {
-	render() {
-		return (
-			<div>
-			This is test page.
-			</div>
-			);
-	}
-}
+import ReactDOM from 'react-dom';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import MyAwesomeReactComponent from './MyAwesomeReactComponent';
+ 
+const App = () => (
+  <MuiThemeProvider>
+    <MyAwesomeReactComponent />
+  </MuiThemeProvider>
+);
+ 
+export default App;
